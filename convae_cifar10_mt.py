@@ -70,7 +70,7 @@ def run():
     # # convae, softmax
     # convae.compile(optimizer=Adam(), loss=mean_squared_error, metrics=[mean_squared_error])
     # classifier.compile(optimizer=Adam(), loss=categorical_crossentropy, metrics=[categorical_accuracy])
-    # for i in range(10):
+    # for i in range(100):
     # convae.fit(x_train, x_train, epochs=1, verbose=0)
     # x_decode_train = encoder.predict(x_train)
     # x_decode_test = encoder.predict(x_test)
@@ -80,7 +80,7 @@ def run():
 
     # # encoder_softmax
     # encoder_softmax_model.compile(optimizer=Adam(), loss=categorical_crossentropy, metrics=[categorical_accuracy])
-    # for i in range(10):
+    # for i in range(100):
     #     encoder_softmax_model.fit(x_train, y_train, epochs=1, verbose=0)
     #     print(encoder_softmax_model.evaluate(x_test, y_test, verbose=0))
 
