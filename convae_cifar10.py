@@ -63,16 +63,17 @@ def run():
     y_test = temp
 
     encoder, _, convae, _ = build_convae_model()
-    convae.compile(optimizer=Adam(), loss=mean_squared_error, metrics=[mean_squared_error])
-    convae.fit(x_train, x_train, epochs=20)
-
-    x_decode_train = encoder.predict(x_train)
-    x_decode_test = encoder.predict(x_test)
+    convae.compile(optimizer=Adam(), loss=[mean_squared_error], metrics=[mean_squared_error])
 
     classifier = build_softmax_model()
-    classifier.compile(optimizer=Adam(), loss=categorical_crossentropy, metrics=[categorical_accuracy])
-    classifier.fit(x_decode_train, y_train, epochs=10)
-    print(classifier.evaluate(x_decode_test, y_test))
+    classifier.compile(optimizer=Adam(), loss=[categorical_crossentropy], metrics=[categorical_accuracy])
+    
+    for i in range(100): 
+        convae.fit(x_train, x_train, epochs=1)
+        x_decode_train = encoder.predict(x_train)
+        x_decode_test = encoder.predict(x_test)
+        classifier.fit(x_decode_train, y_train, epochs=1)
+        print(classifier.evaluate(x_decode_test, y_test))
 
 if __name__ == '__main__':
     run()

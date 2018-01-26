@@ -14,8 +14,10 @@ def build_softmax_model():
 def build_ae_model(activation=''):
     inputs = Input(shape=(784,))
     
-    x_encoder = Dense(200, activation=activation, use_bias=True)(inputs)
-    x_decoder = Dense(784, activation=activation, use_bias=True)(x_encoder)
+    x_encoder = Dense(512, activation=activation, use_bias=True)(inputs)
+    x_encoder = Dense(200, activation=activation, use_bias=True)(x_encoder)
+    x_decoder = Dense(512, activation=activation, use_bias=True)(x_encoder)
+    x_decoder = Dense(784, activation=activation, use_bias=True)(x_decoder)
     outputs = x_decoder 
     
     encoder = Model(inputs, x_encoder)
@@ -52,8 +54,8 @@ def main():
     _, acc_sigmoid_aes = run_embeded_aes(['sigmoid'] * 4)
     _, acc_tahn_aes = run_embeded_aes(['tanh'] * 4)
     _, acc_relu_aes = run_embeded_aes(['relu'] * 4)
-    _, acc_xxx_aes = run_embeded_aes(['xxx'] * 4)
-    _, acc_mix_aes  = run_embeded_aes(['sigmoid', 'tanh', 'relu', 'xxx'])
+    _, acc_xxx_aes = run_embeded_aes(['softplus'] * 4)
+    _, acc_mix_aes  = run_embeded_aes(['sigmoid', 'tanh', 'relu', 'softplus'])
 
 if __name__ == '__main__': 
     main()

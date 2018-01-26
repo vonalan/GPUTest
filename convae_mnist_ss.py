@@ -79,12 +79,12 @@ def run():
     y_train[idx[int(m * 0.5):],-1] = 1
 
     # print(x_train[idx[int(m * 0.5)-1],...].flatten())
-    print(m_train[idx[int(m * 0.5)-1],...].flatten())
-    print(y_train[idx[int(m * 0.5)-1],...].flatten())
+    # print(m_train[idx[int(m * 0.5)-1],...].flatten())
+    # print(y_train[idx[int(m * 0.5)-1],...].flatten())
 
     # print(x_train[idx[int(m * 0.5)],...].flatten())
-    print(m_train[idx[int(m * 0.5)],...].flatten())
-    print(y_train[idx[int(m * 0.5)],...].flatten())
+    # print(m_train[idx[int(m * 0.5)],...].flatten())
+    # print(y_train[idx[int(m * 0.5)],...].flatten())
 
     encoder, _, convae, encoder_softmax_model, mix_model = build_convae_model()
     classifier = build_softmax_model()
