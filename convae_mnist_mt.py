@@ -66,26 +66,27 @@ def run():
     # # convae, softmax
     # convae.compile(optimizer=Adam(), loss=mean_squared_error, metrics=[mean_squared_error])
     # classifier.compile(optimizer=Adam(), loss=categorical_crossentropy, metrics=[categorical_accuracy])
-    # for i in range(10):
+    # for i in range(100):
         # convae.fit(x_train, x_train, epochs=1, verbose=0)
         # x_decode_train = encoder.predict(x_train)
         # x_decode_test = encoder.predict(x_test)
         # classifier.fit(x_decode_train, y_train, epochs=1, verbose=0)
         # print(classifier.evaluate(x_decode_test, y_test, verbose=0))
+    
+    # encoder_softmax
+    encoder_softmax_model.compile(optimizer=Adam(), loss=categorical_crossentropy, metrics=[categorical_accuracy])
+    for i in range(100):
+        encoder_softmax_model.fit(x_train, y_train, epochs=1, verbose=0)
+        print(encoder_softmax_model.evaluate(x_test, y_test, verbose=0))
 
-
-    # # encoder_softmax
-    # encoder_softmax_model.compile(optimizer=Adam(), loss=categorical_crossentropy, metrics=[categorical_accuracy])
-    # for i in range(10):
-    #     encoder_softmax_model.fit(x_train, y_train, epochs=1, verbose=0)
-    #     print(encoder_softmax_model.evaluate(x_test, y_test, verbose=0))
-
+    '''
     # mix_model
     mix_model.compile(optimizer=Adam(), loss=[categorical_crossentropy, mean_squared_error], metrics=[categorical_accuracy, mean_squared_error])
     for i in range(100):
         mix_model.fit([x_train], [y_train, x_train], epochs=1, verbose=0)
         print(mix_model.evaluate([x_test], [y_test, x_test], verbose=0))
-
+    '''
+    
 if __name__ == '__main__':
     with tf.device('/cpu:0'):
         run()
