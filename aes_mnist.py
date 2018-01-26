@@ -28,7 +28,7 @@ y_test = temp
     
 
 def build_softmax_model():
-   inputs = Input(shape=(200,))
+   inputs = Input(shape=(200*4,))
    outputs = Dense(10, activation='softmax')(inputs)
    model = Model(inputs, outputs)
    return model
@@ -59,7 +59,7 @@ def run_ae(activation=''):
         xtrain = x_train * 2 - 1 
         xtest = x_test * 2 - 1
     
-    ae.fit(xtrain, xtrain, epochs=1, verbose=0)
+    ae.fit(xtrain, xtrain, epochs=2, verbose=1)
     xtrain = encoder.predict(xtrain)
     xtest = encoder.predict(xtest)
     return xtrain, xtest
@@ -76,15 +76,15 @@ def run_aes(activations=None):
     '''
     
     # bugs | concatenate 
-    print(np.array(encode_xtrain).shape, np.array(encode_xtrain).shape)
+    print(np.array(encode_xtrain).shape, np.array(encode_xtesta).shape)
     encode_xtrain = np.array(encode_xtrain).transpose((1,0,2)).reshape((-1, 200 * 4))
     encode_xtesta = np.array(encode_xtesta).transpose((1,0,2)).reshape((-1, 200 * 4))
-    print(encode_xtrain.shape, encode_xtest.shape)
+    print(encode_xtrain.shape, encode_xtesta.shape)
     
-    cls = build_softmax_model()
-    cls.compile(optimizer=Adam(), loss=[categorical_crossentropy], metrics=[categorical_accuracy])
-    loss_train, acc_train = cls.fit(encode_xtrain, ytrain, epochs=1, verbose=0)
-    loss_test, acc_test = cls.evaluate(encode_xtest, ytest, verbose=0)
+    classifier = build_softmax_model()
+    classifier.compile(optimizer=Adam(), loss=[categorical_crossentropy], metrics=[categorical_accuracy])
+    classifier.fit(encode_xtrain, y_train, epochs=2, verbose=1)
+    loss_test, acc_test = classifier.evaluate(encode_xtesta, y_test, verbose=1)
     return loss_test, acc_test
 
 def main():
