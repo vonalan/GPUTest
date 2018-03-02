@@ -59,7 +59,7 @@ def run_ae(activation=''):
         xtrain = x_train * 2 - 1 
         xtest = x_test * 2 - 1
     
-    ae.fit(xtrain, xtrain, epochs=2, verbose=1)
+    ae.fit(xtrain, xtrain, epochs=5, verbose=1 )
     xtrain = encoder.predict(xtrain)
     xtest = encoder.predict(xtest)
     return xtrain, xtest
@@ -83,7 +83,7 @@ def run_aes(activations=None):
     
     classifier = build_softmax_model()
     classifier.compile(optimizer=Adam(), loss=[categorical_crossentropy], metrics=[categorical_accuracy])
-    classifier.fit(encode_xtrain, y_train, epochs=2, verbose=1)
+    classifier.fit(encode_xtrain, y_train, epochs=5, verbose=1)
     loss_test, acc_test = classifier.evaluate(encode_xtesta, y_test, verbose=1)
     return loss_test, acc_test
 
@@ -97,10 +97,3 @@ def main():
     
 if __name__ == '__main__': 
     main()
-
-
-        
-        
-
-
-

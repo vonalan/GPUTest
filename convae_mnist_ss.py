@@ -74,9 +74,9 @@ def run():
     idx = np.arange(m)
     np.random.shuffle(idx)
 
-    m_train[idx[int(m * 0.5):],...] = -1
-    y_train[idx[int(m * 0.5):],...] = 0
-    y_train[idx[int(m * 0.5):],-1] = 1
+    m_train[idx[int(m * 0.1):],...] = -1
+    y_train[idx[int(m * 0.1):],...] = 0
+    y_train[idx[int(m * 0.1):],-1] = 1
 
     # print(x_train[idx[int(m * 0.5)-1],...].flatten())
     # print(m_train[idx[int(m * 0.5)-1],...].flatten())
@@ -104,7 +104,7 @@ def run():
     # encoder_softmax_model.compile(optimizer=Adam(), loss=categorical_crossentropy, metrics=[categorical_accuracy])
     # for i in range(10):
     #     encoder_softmax_model.fit(x_train, y_train, epochs=1, verbose=0)
-    #     print(encoder_softmax_model.evaluate(x_test, y_test, verbose=0))
+    #     print(encoder_softma x_model.evaluate(x_test, y_test, verbose=0))
 
     # mix_model
     mix_model.compile(optimizer=Adam(), loss=[mean_squared_error, categorical_crossentropy], metrics=[mean_squared_error, categorical_accuracy])
