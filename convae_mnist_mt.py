@@ -60,6 +60,15 @@ def run():
         temp[i, y_test[i]] = 1
     y_test = temp
 
+    # print(x_train.shape, y_train.shape)
+    # m = x_train.shape[0]
+    # idx = np.arange(m)
+    # np.random.shuffle(idx)
+
+    # x_train = x_train[idx[int(m * 0.1):], ...]
+    # y_train = y_train[idx[int(m * 0.1):], ...]
+    # print(x_train.shape, y_train.shape)
+
     encoder, _, convae, encoder_softmax_model, mix_model = build_convae_model()
     classifier = build_softmax_model()
 
