@@ -28,7 +28,11 @@ def build_convae_model():
     x_encode = Flatten()(x)
     encoder = Model(inputs, x_encode)
 
-    x_softmax = Dense(10, activation='softmax')(x_encode)
+    '''is x_fc neccessary?'''
+    x_fc = x_encode
+    x_fc = Dense(1024, activation='relu')(x_fc)
+    x_fc = Dense(1024, activation='relu')(x_fc)
+    x_softmax = Dense(10, activation='softmax')(x_fc)
     softmax_model = Model(inputs, x_softmax)
 
     x = Reshape((7,7,32))(x_encode)
@@ -60,14 +64,14 @@ def run():
         temp[i, y_test[i]] = 1
     y_test = temp
 
-    # print(x_train.shape, y_train.shape)
-    # m = x_train.shape[0]
-    # idx = np.arange(m)
-    # np.random.shuffle(idx)
+    print(x_train.shape, y_train.shape)
+    m = x_train.shape[0]
+    idx = np.arange(m)
+    np.random.shuffle(idx)
 
-    # x_train = x_train[idx[int(m * 0.1):], ...]
-    # y_train = y_train[idx[int(m * 0.1):], ...]
-    # print(x_train.shape, y_train.shape)
+    x_train = x_train[idx[int(m * 0.9):], ...]
+    y_train = y_train[idx[int(m * 0.9):], ...]
+    print(x_train.shape, y_train.shape)
 
     encoder, _, convae, encoder_softmax_model, mix_model = build_convae_model()
     classifier = build_softmax_model()
@@ -88,21 +92,12 @@ def run():
         encoder_softmax_model.fit(x_train, y_train, epochs=1, verbose=0)
         print(encoder_softmax_model.evaluate(x_test, y_test, verbose=0))
 
-    '''
     # mix_model
-    mix_model.compile(optimizer=Adam(), loss=[categorical_crossentropy, mean_squared_error], metrics=[categorical_accuracy, mean_squared_error])
-    for i in range(100):
+    mix_model.compile(optimizer=Adam(), loss_weights=[0.1, 1], loss=[categorical_crossentropy, mean_squared_error], metrics=[categorical_accuracy, mean_squared_error])
+    for i in range(200):
         mix_model.fit([x_train], [y_train, x_train], epochs=1, verbose=0)
         print(mix_model.evaluate([x_test], [y_test, x_test], verbose=0))
-    '''
     
 if __name__ == '__main__':
-    with tf.device('/cpu:0'):
+    with tf.device('/gpu:0'):
         run()
-
-
-        
-        
-
-
-

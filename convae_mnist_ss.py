@@ -74,9 +74,9 @@ def run():
     idx = np.arange(m)
     np.random.shuffle(idx)
 
-    m_train[idx[int(m * 0.1):],...] = -1
-    y_train[idx[int(m * 0.1):],...] = 0
-    y_train[idx[int(m * 0.1):],-1] = 1
+    m_train[idx[int(m * 0.9):],...] = -1
+    y_train[idx[int(m * 0.9):],...] = 0
+    y_train[idx[int(m * 0.0):],-1] = 1
 
     # print(x_train[idx[int(m * 0.5)-1],...].flatten())
     # print(m_train[idx[int(m * 0.5)-1],...].flatten())
